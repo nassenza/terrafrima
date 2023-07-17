@@ -68,13 +68,11 @@ An analysis of existing resources can inform which of these principles maintaine
 | [aws_vpn_gateway_attachment](https://registry.terraform.io/providers/-/aws/latest/docs/resources/vpn_gateway_attachment) | One-to-one| [Singular](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AttachVpnGateway.html)| [Singular](https://github.com/hashicorp/terraform-provider-aws/blob/v5.7.0/internal/service/ec2/vpnsite_gateway_attachment.go#L48-L51) |
 
 
-_*1 - Structure of this API precludes it from being implemented in a singular fashion._
+<sub>_*1 - Structure of this API precludes it from being implemented in a singular fashion._</sub>  
+<sub>_*2 - Creates exclusive attachments._</sub>  
+<sub>_*3 - Creates exclusive rules._</sub>  
 
-_*2 - Creates exclusive attachments._
-
-_*3 - Creates exclusive rules._
-
-_**Note**: Due to the volume of resources with “rule” in the name (~70), only the prominent security group rule resources were included in the analysis above. While “rule” resources often follow the same relationship-style design, the ~40 examples above provided enough initial data to inform design standards._
+<sub>_**Note**: Due to the volume of resources with “rule” in the name (~70), only the prominent security group rule resources were included in the analysis above. While “rule” resources often follow the same relationship-style design, the ~40 examples above provided enough initial data to inform design standards._</sub>
 
 
 Of the 44 resources documented above, 29 are of the “one-to-many” form and 17 have “plural” AWS APIs (ie. accepts a list of child resources to be attached to a single parent). Of these 17, 13 resources (76%) use a “singular” Terraform implementation, where a list with one item is sent to the Create/Read/Update API, rather than allowing a single resource to manage multiple relationships. Of the remaining 4 with “plural” Terraform implementations, 2 do so in order to exclusively manage child relationships (`aws_security_group` Ingress/Egress variants), and one requires a “plural” implementation simply because of API limitations.

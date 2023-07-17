@@ -21,6 +21,7 @@ An analysis of existing resources can inform which of these principles maintaine
 
 
 | **Resource Name** | **Form** | **AWS API** | **Terraform** |
+| --- | --- | --- | --- |
 | [aws_alb_target_group_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group_attachment) | One-to-many | [Plural](https://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_RegisterTargets.html) | [Singular](https://github.com/hashicorp/terraform-provider-aws/blob/v5.7.0/internal/service/elbv2/target_group_attachment.go#L76-L79) |
 | [aws_autoscaling_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_attachment) (ELB) | One-to-many | [Plural](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_AttachLoadBalancers.html) | [Singular](https://github.com/hashicorp/terraform-provider-aws/blob/v5.7.0/internal/service/autoscaling/attachment.go#L58-L61) |
 | [aws_autoscaling_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_attachment) (Target Group ARN) | One-to-many | [Plural](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_AttachLoadBalancerTargetGroups.html)| [Singular](https://github.com/hashicorp/terraform-provider-aws/blob/v5.7.0/internal/service/autoscaling/attachment.go#L74-L77) |
@@ -66,6 +67,7 @@ An analysis of existing resources can inform which of these principles maintaine
 | [aws_vpclattice_target_group_attachment](https://registry.terraform.io/providers/-/aws/latest/docs/resources/vpclattice_target_group_attachment) | One-to-many | [Plural](https://docs.aws.amazon.com/vpc-lattice/latest/APIReference/API_RegisterTargets.html)| [Singular](https://github.com/hashicorp/terraform-provider-aws/blob/v5.7.0/internal/service/vpclattice/target_group_attachment.go#L81-L84) |
 | [aws_vpn_gateway_attachment](https://registry.terraform.io/providers/-/aws/latest/docs/resources/vpn_gateway_attachment) | One-to-one| [Singular](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AttachVpnGateway.html)| [Singular](https://github.com/hashicorp/terraform-provider-aws/blob/v5.7.0/internal/service/ec2/vpnsite_gateway_attachment.go#L48-L51) |
 
+
 _*1 - Structure of this API precludes it from being implemented in a singular fashion._
 
 _*2 - Creates exclusive attachments._
@@ -73,6 +75,7 @@ _*2 - Creates exclusive attachments._
 _*3 - Creates exclusive rules._
 
 _**Note**: Due to the volume of resources with “rule” in the name (~70), only the prominent security group rule resources were included in the analysis above. While “rule” resources often follow the same relationship-style design, the ~40 examples above provided enough initial data to inform design standards._
+
 
 Of the 44 resources documented above, 29 are of the “one-to-many” form and 17 have “plural” AWS APIs (ie. accepts a list of child resources to be attached to a single parent). Of these 17, 13 resources (76%) use a “singular” Terraform implementation, where a list with one item is sent to the Create/Read/Update API, rather than allowing a single resource to manage multiple relationships. Of the remaining 4 with “plural” Terraform implementations, 2 do so in order to exclusively manage child relationships (`aws_security_group` Ingress/Egress variants), and one requires a “plural” implementation simply because of API limitations.
 

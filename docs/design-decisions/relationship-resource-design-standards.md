@@ -1,8 +1,9 @@
 # Relationship Resource Design Standards
 
-**Summary:** Align on design standards for relationship management resources in the Terraform AWS Provider. 
+**Summary:** Align on design standards for relationship management resources in the Terraform AWS Provider.  
+**Created**: 2022-07-11  
 
-**Created**: 2022-07-11
+---
 
 The goal of this document is to assess the design of existing “relationship” resources in the Terraform AWS Provider and determine if a consistent set of rules can be defined for implementing them. For the purpose of this document, a “relationship” resource is defined as a resource which manages either a direct relationship between two standalone resources (“one-to-one”, ie. <code>[aws_ssoadmin_permission_boundary_attachment](https://registry.terraform.io/providers/-/aws/latest/docs/resources/ssoadmin_permissions_boundary_attachment)</code>), or a variable number of child relationships to a parent resource (“one-to-many”, ie. <code>[aws_iam_role_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment)</code>). Resources and AWS API’s with this function will often contain suffixes like “attachment”, “assignment”, “registration”, or “rule”.
 
